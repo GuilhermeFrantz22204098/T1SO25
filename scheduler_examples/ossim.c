@@ -318,7 +318,7 @@ int main(int argc, char *argv[]) {
                 rr_scheduler(current_time_ms, &ready_queue, &CPU);
                 break;
             case SCHED_MLFQ:
-                rr_scheduler(current_time_ms, &ready_queue, &CPU);
+                mlfq_scheduler(current_time_ms, &ready_queue, &CPU);
                 break;
 
             default:
