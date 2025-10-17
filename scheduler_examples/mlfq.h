@@ -1,7 +1,3 @@
-//
-// Created by guilh on 16/10/2025.
-//
-
 #ifndef MLFQ_H
 #define MLFQ_H
 

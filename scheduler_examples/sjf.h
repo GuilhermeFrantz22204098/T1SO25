@@ -1,7 +1,3 @@
-//
-// Created by guilh on 12/10/2025.
-//
-
 #ifndef SJF_H
 #define SJF_H
 
