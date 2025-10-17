@@ -33,11 +33,15 @@ void fifo_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
                 perror("write");
             }
             // Application finished and can be removed (this is FIFO after all)
+            printf("T terminação: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
             free((*cpu_task));
             (*cpu_task) = NULL;
         }
     }
     if (*cpu_task == NULL) {            // If CPU is idle
         *cpu_task = dequeue_pcb(rq);   // Get next task from ready queue (dequeue from head)
+        if (*cpu_task != NULL) {
+            printf("T primeira exec: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
+        }
     }
 }

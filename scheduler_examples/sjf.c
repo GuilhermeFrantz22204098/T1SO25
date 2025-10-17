@@ -20,6 +20,7 @@ void sjf_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
                 perror("write");
             }
             // Application finished and can be removed
+            printf("T terminação: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
             free((*cpu_task));
             (*cpu_task) = NULL;
         }
@@ -41,6 +42,7 @@ void sjf_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
         // run the process
         if (min_time_elem != NULL) {
             *cpu_task = min_time_elem->pcb;
+            printf("T primeira exec: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
             remove_queue_elem(rq, min_time_elem);
             free(min_time_elem);
         }

@@ -22,6 +22,7 @@ void rr_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
                 perror("write");
             }
             // Application finished and can be removed
+            printf("T terminação: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
             free((*cpu_task));
             (*cpu_task) = NULL;
         }
@@ -34,6 +35,9 @@ void rr_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
     if (*cpu_task == NULL) {
         *cpu_task = dequeue_pcb(rq);
         if (*cpu_task != NULL) {
+            if ((*cpu_task)->ellapsed_time_ms == 0) {
+                printf("T primeira exec: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
+            }
             // Start time slice for this pcb
             (*cpu_task)->slice_start_ms = current_time_ms;
         }

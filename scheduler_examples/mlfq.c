@@ -13,6 +13,7 @@ void mlfq_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
     // Gets all new processes into the first level queue
     pcb_t* new_pcb;
     while ((new_pcb = dequeue_pcb(rq)) != NULL) {
+        printf("T início: %u, PID: %d\n", current_time_ms, new_pcb->pid);
         enqueue_pcb(&levels[0], new_pcb);
     }
 
@@ -30,6 +31,7 @@ void mlfq_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
                 perror("write");
             }
             // Application finished and can be removed
+            printf("T terminação: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
             free((*cpu_task));
             (*cpu_task) = NULL;
         }
@@ -46,6 +48,9 @@ void mlfq_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
             if (levels[i].head != NULL) {
                 *cpu_task = dequeue_pcb(&levels[i]);
                 if (*cpu_task != NULL) {
+                    if ((*cpu_task)->ellapsed_time_ms == 0) {
+                        printf("T primeira exec: %u, PID: %d\n", current_time_ms, (*cpu_task)->pid);
+                    }
                     // Start time slice for this pcb
                     (*cpu_task)->slice_start_ms = current_time_ms;
                     current_process_level = i;
