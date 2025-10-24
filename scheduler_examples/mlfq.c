@@ -39,6 +39,7 @@ void mlfq_scheduler(uint32_t current_time_ms, queue_t *rq, pcb_t **cpu_task) {
             // Reached the time-slice and is sent back to the lower-priority level rq
             int next_level = (current_process_level + 1 < NUM_LEVELS) ? (current_process_level + 1) : (NUM_LEVELS - 1);
             enqueue_pcb(&levels[next_level], *cpu_task);
+            printf("Added PID %d to lvl %d\n", (*cpu_task)->pid, next_level);
             *cpu_task = NULL;
         }
     }
